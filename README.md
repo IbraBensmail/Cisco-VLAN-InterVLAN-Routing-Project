@@ -11,7 +11,8 @@ This project simulates a **multi-VLAN enterprise network** built in **Cisco Pack
 - Manual IP configuration on clients  
 
 ## 🖥️ Topology Overview
-![screenshots/topology_overview.png]
+![Network Topology](./topology.png)
+
 
 ## 📁 Files
 - [`Cisco-VLAN-InterVLAN-Routing-Project.pkt`](Cisco-VLAN-InterVLAN-Routing-Project.pkt) — Cisco Packet Tracer topology  
