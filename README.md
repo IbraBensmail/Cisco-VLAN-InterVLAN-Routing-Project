@@ -11,7 +11,7 @@ This project simulates a **multi-VLAN enterprise network** built in **Cisco Pack
 - Manual IP configuration on clients  
 
 ## 🖥️ Topology Overview
-![Network Topology](./topology.png)
+![Network Topology](./topology_overview.png)
 
 
 ## 📁 Files
