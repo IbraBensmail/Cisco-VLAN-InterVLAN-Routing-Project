@@ -133,7 +133,7 @@ C:\> start www
 - `Cisco-VLAN-InterVLAN-Routing-Project.pkt` → Main project file  
 - `README.md` → Short overview  
 - `README_detailed.md` → Full documentation  
-- `/screenshots/` → Contains topology and testing screenshots  
+- `/screenshots/` → Contains topology and testing screenshots
 
 ---
 
