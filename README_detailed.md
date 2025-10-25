@@ -6,7 +6,7 @@
 
 ## Overview
 
-This project demonstrates the configuration of multiple VLANs, inter-VLAN routing using a **router with two physical interfaces**, static IP addressing, DNS resolution, and web access testing through an HTTP server — all built and verified in **Cisco Packet Tracer**.
+This project demonstrates the configuration of multiple VLANs, inter-VLAN routing using a **router with two physical interfaces**, static IP addressing, DNS resolution, and web access testing through an HTTP server, all built and verified in **Cisco Packet Tracer**.
 
 ---
 
