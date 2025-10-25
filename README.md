@@ -2,7 +2,7 @@
 
 This project simulates a **multi-VLAN enterprise network** built in **Cisco Packet Tracer**, featuring full **inter-VLAN communication**, **static routing**, **NAT**, and integrated **DNS + HTTP servers** for end-to-end connectivity and name resolution.
 
-## 🔧 Technologies Used
+## Technologies Used
 - VLAN configuration & trunking  
 - Inter-VLAN routing (**Router-on-a-Stick**)  
 - Static routing  
