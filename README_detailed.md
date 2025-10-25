@@ -133,7 +133,7 @@ C:\> start www
 
 ---
 
-## Files Included
+## 📁 Files Included
 
 - [`VLAN_internet.pkt`](./VLAN_internet.pkt) → Main project file  
 - [`README.md`](./README.md) → Short overview  
