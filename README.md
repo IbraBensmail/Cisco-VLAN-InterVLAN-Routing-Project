@@ -23,7 +23,6 @@ This project simulates a **multi-VLAN enterprise network** built in **Cisco Pack
 - Multiple VLANs with isolated traffic for better network segmentation.  
 - A central router performing **Inter-VLAN routing and NAT** for Internet access.  
 - **DNS and HTTP servers** simulate real enterprise services.  
-
 ---
 
- *For detailed IP addressing, routing configs, and DNS/HTTP setup, see ![README_detailed](./README_detailed.md)
+ For detailed IP addressing, routing configs, and DNS/HTTP setup, see ![README_detailed](./README_detailed.md)
