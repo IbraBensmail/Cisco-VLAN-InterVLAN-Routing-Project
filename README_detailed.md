@@ -1,121 +1,149 @@
-# Cisco VLAN & Inter-VLAN Routing Project (Detailed Documentation)
+# Cisco VLAN & Inter-VLAN Routing Project
 
-This project demonstrates how to design, configure, and verify a **multi-VLAN network** with **inter-VLAN routing**, **NAT for Internet access**, and **DNS + HTTP servers** in **Cisco Packet Tracer**.
-
----
-
-## Network Overview
-
-| Device | Role | IP Address | VLAN | Notes |
-|---------|------|-------------|-------|-------|
-| PC0 | Client | 192.168.10.10 | 10 | VLAN 10 user |
-| PC1 | Client | 192.168.10.11 | 10 | VLAN 10 user |
-| PC2 | Client | 192.168.20.10 | 20 | VLAN 20 user |
-| PC3 | Client | 192.168.20.11 | 20 | VLAN 20 user |
-| PC4 | Client | 192.168.20.12 | 20 | VLAN 20 user |
-| Switch0 | L3 Switch | 10.0.0.1 / VLAN10 192.168.10.1 | — | Connects VLAN10 to Router1 |
-| Switch1 | L3 Switch | 10.0.0.2 / VLAN20 192.168.20.2 | — | Connects VLAN20 to Switch0 |
-| Router1 | Gateway / NAT | 192.168.10.254 / 203.0.113.2 | — | Internet gateway router |
-| Internet Router | Simulated ISP | 203.0.113.1 | — | Internet simulation |
-| DNS & HTTP Server | Server | 192.168.10.50 | 10 | Provides DNS + HTTP service |
+**Built from scratch using Cisco Packet Tracer — implementing VLANs, Inter-VLAN routing, DNS, and Web Server (HTTP) functionality.**
 
 ---
 
-## Step-by-Step Configuration Summary
+## Overview
 
-### 1️⃣ VLAN and Interface Setup (Switch0 & Switch1)
-- Created VLAN 10 and VLAN 20.
-- Assigned access ports for respective PCs.
-- Configured **trunk link** between the two switches on Gig0/1.
-- Enabled Layer 3 routing (`ip routing`) on both switches.
+This project demonstrates the configuration of multiple VLANs, inter-VLAN routing using **Router-on-a-Stick**, static IP addressing, DNS resolution, and web access testing through an HTTP server — all built and tested in **Cisco Packet Tracer**.
 
-### 2️⃣ Inter-VLAN Routing
-- Switch0 and Switch1 both configured with SVI interfaces:
-  ```bash
-  interface vlan 10
-   ip address 192.168.10.1 255.255.255.0
-  interface vlan 20
-   ip address 192.168.20.2 255.255.255.0
-  ```
-- Static routes ensure each switch can reach other VLANs via `10.0.0.0/24` inter-switch network.
+---
 
-### 3️⃣ Router Configuration (Router1)
-- Router1 connects to Switch0 and the Internet router.
-- Configured NAT for Internet access:
-  ```bash
-  interface FastEthernet0/0
-   ip address 192.168.10.254 255.255.255.0
-   ip nat inside
+## Objectives
 
-  interface FastEthernet0/1
-   ip address 203.0.113.2 255.255.255.0
-   ip nat outside
+- Configure VLANs and assign devices to each VLAN.
+- Enable inter-VLAN routing using a single router interface with subinterfaces.
+- Set up a **DNS Server** for hostname resolution.
+- Add a **Web Server (HTTP)** to serve web content accessible via DNS name (`www`).
+- Verify end-to-end connectivity between VLANs and services.
 
-  ip nat inside source list 1 interface FastEthernet0/1 overload
-  access-list 1 permit 192.168.0.0 0.0.255.255
-  ```
+---
 
-### 4️⃣ DNS Server Configuration
-- IP: **192.168.10.50**
-- Added A record:
-  | Name | Address |
-  |------|----------|
-  | www  | 192.168.10.50 |
-- All PCs configured with **Primary DNS: 192.168.10.50**.
+## Device List
 
-### 5️⃣ HTTP Server Setup
-- Enabled **HTTP service** on the same server (192.168.10.50).
-- Tested using `http://www` from VLAN 10 and VLAN 20 PCs → success.
+| Device Name | Function | Interface | IP Address | VLAN | Notes |
+|--------------|-----------|------------|-------------|-------|--------|
+| **Router1** | Inter-VLAN Routing (Router-on-a-Stick) | G0/0.10<br>G0/0.20 | 192.168.10.1<br>192.168.20.1 | 10<br>20 | Default gateway for all VLANs |
+| **Switch0** | Access Switch | VLAN Interfaces | - | 10, 20 | Connects PCs and Servers |
+| **Switch1** | Distribution Switch | Trunk Port | - | 10, 20 | Connects to Router1 and Switch0 |
+| **PC1** | Client | Fa0 | 192.168.10.10 | 10 | Test device (VLAN10) |
+| **PC2** | Client | Fa0 | 192.168.20.10 | 20 | Test device (VLAN20) |
+| **Server0** | DNS Server | Fa0 | 192.168.10.50 | 10 | Provides DNS name resolution |
+| **Server1** | Web Server (HTTP) | Fa0 | 192.168.10.60 | 10 | Hosts the `www` webpage for VLANs |
+
+> Two separate servers were configured — one for **DNS (192.168.10.50)** and another for **HTTP (192.168.10.60)** — ensuring modularity and realistic service separation.
+
+---
+
+## Configuration Summary
+
+### VLAN Configuration (on both switches)
+```bash
+Switch(config)# vlan 10
+Switch(config-vlan)# name VLAN10
+Switch(config)# vlan 20
+Switch(config-vlan)# name VLAN20
+
+Switch(config)# interface range fa0/1 - 4
+Switch(config-if-range)# switchport mode access
+Switch(config-if-range)# switchport access vlan 10
+
+Switch(config)# interface range fa0/5 - 8
+Switch(config-if-range)# switchport mode access
+Switch(config-if-range)# switchport access vlan 20
+```
+
+### Trunk Link Configuration
+```bash
+Switch(config)# interface g0/1
+Switch(config-if)# switchport mode trunk
+Switch(config-if)# switchport trunk allowed vlan 10,20
+```
+
+### Router Configuration (Router-on-a-Stick)
+```bash
+Router(config)# interface g0/0.10
+Router(config-subif)# encapsulation dot1Q 10
+Router(config-subif)# ip address 192.168.10.1 255.255.255.0
+
+Router(config)# interface g0/0.20
+Router(config-subif)# encapsulation dot1Q 20
+Router(config-subif)# ip address 192.168.20.1 255.255.255.0
+```
+
+---
+
+## DNS Server Configuration
+
+| Setting | Value |
+|----------|--------|
+| IP Address | 192.168.10.50 |
+| Default Gateway | 192.168.10.1 |
+| DNS Record | `www` → `192.168.10.60` (Web Server) |
+
+Verification from any PC (VLAN10 or VLAN20):
+```bash
+C:\> nslookup www
+Server:  192.168.10.50
+Address: 192.168.10.50
+
+Non-authoritative answer:
+Name:    www
+Address: 192.168.10.60
+```
+
+---
+
+## 💻 HTTP Server Configuration
+
+| Setting | Value |
+|----------|--------|
+| IP Address | 192.168.10.60 |
+| Default Gateway | 192.168.10.1 |
+| Web Service | Enabled (HTTP) |
+| Test Page | "Welcome to VLAN Network!" |
+
+Verification:
+```bash
+C:\> ping www
+C:\> start www
+```
+→ Opens the test webpage in Cisco Packet Tracer’s web browser.
 
 ---
 
 ## Testing & Verification
 
-| Test | Source | Destination | Result |
-|------|----------|-------------|--------|
-| Ping 192.168.10.1 | PC0 | Switch0 VLAN10 SVI | ✅ |
-| Ping 192.168.20.2 | PC2 | Switch1 VLAN20 SVI | ✅ |
-| Ping 203.0.113.1 | PC4 | Internet Router | ✅ |
-| nslookup www | Any PC | 192.168.10.50 | ✅ |
-| Open `http://www` | Any PC | Web Server | ✅ |
+| Test | Expected Result |
+|------|------------------|
+| `ping` between VLAN10 and VLAN20 | ✅ Successful |
+| DNS name resolution (`nslookup www`) | ✅ Successful |
+| Web access (`start www`) | ✅ Opens webpage |
+| Trunk link status | ✅ Active |
+| Router subinterfaces | ✅ Operational |
 
 ---
 
-## 📷 Screenshots
+## Project Diagram
 
-Place in `/screenshots/` folder:
-- `topology_overview.png`
-- `ping_test.png`
-- `dns_lookup.png`
-- `web_access.png`
-
----
-
-## File List
-
-```
-Cisco-VLAN-InterVLAN-Routing-Project/
-├── Cisco-VLAN-InterVLAN-Routing-Project.pkt
-├── README.md
-├── README_detailed.md
-└── screenshots/
-    ├── topology_overview.png
-    ├── ping_test.png
-    ├── dns_lookup.png
-    └── web_access.png
+*(Insert your topology screenshot here)*  
+Example:
+```markdown
+![Network Topology](screenshots/topology.png)
 ```
 
 ---
 
-## Notes
-- Manual IP addressing used for all devices.
-- Inter-switch link (`10.0.0.0/24`) connects Switch0 ↔ Switch1.
-- NAT enabled only on Router1 to simulate Internet access.
-- Server placed in VLAN10 (accessible across VLANs).
+## Files Included
+
+- `Cisco-VLAN-InterVLAN-Routing-Project.pkt` → Main project file  
+- `README.md` → Short overview  
+- `README_detailed.md` → Full documentation  
+- `/screenshots/` → Contains topology and testing screenshots  
 
 ---
 
-### Author
-Project by **Bensmail Ibrahim**  
-*Cisco Packet Tracer learning & simulation project*
+## Summary
 
+A fully functional multi-VLAN network with router-on-a-stick inter-VLAN routing, DNS-based hostname resolution, and web server access — built entirely from scratch in **Cisco Packet Tracer**.
