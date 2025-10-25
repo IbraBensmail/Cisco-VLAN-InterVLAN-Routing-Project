@@ -10,20 +10,20 @@ This project simulates a **multi-VLAN enterprise network** built in **Cisco Pack
 - DNS and Web (HTTP) servers  
 - Manual IP configuration on clients  
 
-## 🖥️ Topology Overview
+## Topology Overview
 ![Network Topology](./topology_overview.png)
 
 
-## 📁 Files
+## Files
 - [`Cisco-VLAN-InterVLAN-Routing-Project.pkt`](VLAN_internet.pkt) — Cisco Packet Tracer topology  
 - [`README_detailed.md`](README_detailed.md) — Full technical documentation  
 - `/screenshots/` — Verification results and network diagrams  
 
-## 🧠 Highlights
+## Highlights
 - Multiple VLANs with isolated traffic for better network segmentation.  
 - A central router performing **Inter-VLAN routing and NAT** for Internet access.  
 - **DNS and HTTP servers** simulate real enterprise services.  
 
 ---
 
-> 💡 *For detailed IP addressing, routing configs, and DNS/HTTP setup, see `README_detailed.md`.*
+ *For detailed IP addressing, routing configs, and DNS/HTTP setup, see `README_detailed.md`.*
