@@ -85,7 +85,7 @@ Internet_Router(config)# interface fa0/0
 Internet_Router(config-if)# ip address 203.0.113.1 255.255.255.0
 Internet_Router(config-if)# no shutdown
 
-# Default route (in a lab the upstream may point to itself or behave as the Internet)
+# Default route 
 Internet_Router(config)# ip route 0.0.0.0 0.0.0.0 FastEthernet0/0
 ```
 
