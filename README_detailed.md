@@ -6,17 +6,17 @@
 
 ## Overview
 
-This project demonstrates the configuration of multiple VLANs, inter-VLAN routing using **Router-on-a-Stick**, static IP addressing, DNS resolution, and web access testing through an HTTP server — all built and tested in **Cisco Packet Tracer**.
+This project demonstrates the configuration of multiple VLANs, inter-VLAN routing using a **router with two physical interfaces**, static IP addressing, DNS resolution, and web access testing through an HTTP server — all built and verified in **Cisco Packet Tracer**.
 
 ---
 
 ## Objectives
 
-- Configure VLANs and assign devices to each VLAN.
-- Enable inter-VLAN routing using a single router interface with subinterfaces.
-- Set up a **DNS Server** for hostname resolution.
-- Add a **Web Server (HTTP)** to serve web content accessible via DNS name (`www`).
-- Verify end-to-end connectivity between VLANs and services.
+- Configure VLANs and assign devices to each VLAN.  
+- Enable inter-VLAN routing using two router interfaces (no subinterfaces).  
+- Set up a **DNS Server** for hostname resolution.  
+- Add a **Web Server (HTTP)** to serve web content accessible via DNS name.  
+- Verify full end-to-end connectivity across VLANs and services.
 
 ---
 
@@ -24,13 +24,17 @@ This project demonstrates the configuration of multiple VLANs, inter-VLAN routin
 
 | Device Name | Function | Interface | IP Address | VLAN | Notes |
 |--------------|-----------|------------|-------------|-------|--------|
-| **Router1** | Inter-VLAN Routing (Router-on-a-Stick) | G0/0.10<br>G0/0.20 | 192.168.10.1<br>192.168.20.1 | 10<br>20 | Default gateway for all VLANs |
-| **Switch0** | Access Switch | VLAN Interfaces | - | 10, 20 | Connects PCs and Servers |
+| **Router1** | Inter-VLAN & Gateway Router | Fa0/0<br>Fa0/1 | 192.168.10.254<br>203.0.113.2 | 10<br>- | Connects internal VLANs and routes traffic |
+| **Switch0** | Access Switch | - | - | 10, 20 | Connects PCs and Servers |
 | **Switch1** | Distribution Switch | Trunk Port | - | 10, 20 | Connects to Router1 and Switch0 |
-| **PC1** | Client | Fa0 | 192.168.10.10 | 10 | Test device (VLAN10) |
-| **PC2** | Client | Fa0 | 192.168.20.10 | 20 | Test device (VLAN20) |
+| **PC0** | Client | Fa0 | 192.168.10.10 | 10 |  |
+| **PC1** | Client | Fa0 | 192.168.10.11 | 10 |  |
+| **PC2** | Client | Fa0 | 192.168.20.10 | 20 |  |
+| **PC3** | Client | Fa0 | 192.168.20.11 | 20 |  |
+| **PC4** | Client | Fa0 | 192.168.20.12 | 20 |  |
 | **Server0** | DNS Server | Fa0 | 192.168.10.50 | 10 | Provides DNS name resolution |
 | **Server1** | Web Server (HTTP) | Fa0 | 192.168.10.60 | 10 | Hosts the `www` webpage for VLANs |
+
 ---
 
 ## Configuration Summary
@@ -51,23 +55,25 @@ Switch(config-if-range)# switchport mode access
 Switch(config-if-range)# switchport access vlan 20
 ```
 
-### Trunk Link Configuration
+### Trunk Link Configuration (between Switch0 ↔ Switch1)
 ```bash
 Switch(config)# interface g0/1
 Switch(config-if)# switchport mode trunk
 Switch(config-if)# switchport trunk allowed vlan 10,20
 ```
 
-### Router Configuration (Router-on-a-Stick)
+### Router Configuration
 ```bash
-Router(config)# interface g0/0.10
-Router(config-subif)# encapsulation dot1Q 10
-Router(config-subif)# ip address 192.168.10.1 255.255.255.0
+Router(config)# interface fa0/0
+Router(config-if)# ip address 192.168.10.254 255.255.255.0
+Router(config-if)# no shutdown
 
-Router(config)# interface g0/0.20
-Router(config-subif)# encapsulation dot1Q 20
-Router(config-subif)# ip address 192.168.20.1 255.255.255.0
+Router(config)# interface fa0/1
+Router(config-if)# ip address 203.0.113.2 255.255.255.0
+Router(config-if)# no shutdown
 ```
+
+> **Note:** Fa0/0 acts as the internal gateway for VLAN10 and VLAN20; inter-VLAN traffic is routed through it.
 
 ---
 
@@ -76,10 +82,9 @@ Router(config-subif)# ip address 192.168.20.1 255.255.255.0
 | Setting | Value |
 |----------|--------|
 | IP Address | 192.168.10.50 |
-| Default Gateway | 192.168.10.1 |
-| DNS Record | `www` → `192.168.10.60` (Web Server) |
+| Default Gateway | 192.168.10.254 |
 
-Verification from any PC (VLAN10 or VLAN20):
+Verification (from any PC):
 ```bash
 C:\> nslookup www
 Server:  192.168.10.50
@@ -92,21 +97,21 @@ Address: 192.168.10.60
 
 ---
 
-## 💻 HTTP Server Configuration
+## 💻 Web Server Configuration
 
 | Setting | Value |
 |----------|--------|
 | IP Address | 192.168.10.60 |
-| Default Gateway | 192.168.10.1 |
+| Default Gateway | 192.168.10.254 |
 | Web Service | Enabled (HTTP) |
-| Test Page | "Welcome to My VLAN Project Web Server" |
+| Test Page | “Welcome to My VLAN Project Web Server” |
 
 Verification:
 ```bash
 C:\> ping www
 C:\> start www
 ```
-→ Opens the test webpage in Cisco Packet Tracer’s web browser.
+→ Opens the test webpage in Cisco Packet Tracer’s built-in web browser.
 
 ---
 
@@ -114,28 +119,30 @@ C:\> start www
 
 | Test | Expected Result |
 |------|------------------|
-| `ping` between VLAN10 and VLAN20 | ✅ Successful |
-| DNS name resolution (`nslookup www`) | ✅ Successful |
+| `ping` between VLAN 10 ↔ VLAN 20 | ✅ Successful |
+| DNS lookup (`nslookup www`) | ✅ Resolves to 192.168.10.60 |
 | Web access (`start www`) | ✅ Opens webpage |
-| Trunk link status | ✅ Active |
-| Router subinterfaces | ✅ Operational |
+| Trunk link (Switch0 ↔ Switch1) | ✅ Active |
+| Router interfaces | ✅ Up and operational |
+| Ping between all VLAN20 PCs (PC2–PC4) | ✅ Successful |
 
 ---
 
 ## Project Diagram
 ![Network Topology](./topology_overview.png)
+
 ---
 
 ## Files Included
 
 - [`VLAN_internet.pkt`](./VLAN_internet.pkt) → Main project file  
 - [`README.md`](./README.md) → Short overview  
-- [`README_detailed.md`](./README_detailed.md) → Full documentation  
-- [`/screenshots/`](./screenshots) → Contains topology and testing screenshots
-
+- [`README_detailed.md`](./README_detailed.md) → This full documentation  
+- [`/screenshots/`](./screenshots) → Contains topology and verification images  
 
 ---
 
 ## Summary
 
-A fully functional multi-VLAN network with router-on-a-stick inter-VLAN routing, DNS-based hostname resolution, and web server access — built entirely from scratch in **Cisco Packet Tracer**.
+A complete multi-VLAN network with static addressing, DNS and HTTP integration, and full inter-VLAN communication — built entirely from scratch in **Cisco Packet Tracer**.  
+The setup demonstrates VLAN segmentation, inter-VLAN routing, DNS-based hostname resolution, and verified end-to-end connectivity.
