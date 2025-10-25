@@ -31,9 +31,6 @@ This project demonstrates the configuration of multiple VLANs, inter-VLAN routin
 | **PC2** | Client | Fa0 | 192.168.20.10 | 20 | Test device (VLAN20) |
 | **Server0** | DNS Server | Fa0 | 192.168.10.50 | 10 | Provides DNS name resolution |
 | **Server1** | Web Server (HTTP) | Fa0 | 192.168.10.60 | 10 | Hosts the `www` webpage for VLANs |
-
-> Two separate servers were configured — one for **DNS (192.168.10.50)** and another for **HTTP (192.168.10.60)** — ensuring modularity and realistic service separation.
-
 ---
 
 ## Configuration Summary
