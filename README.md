@@ -26,4 +26,4 @@ This project simulates a **multi-VLAN enterprise network** built in **Cisco Pack
 
 ---
 
- *For detailed IP addressing, routing configs, and DNS/HTTP setup, see `README_detailed.md`.*
+ *For detailed IP addressing, routing configs, and DNS/HTTP setup, see (./README_detailed.md)
