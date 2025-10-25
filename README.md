@@ -4,9 +4,9 @@ This project simulates a **multi-VLAN enterprise network** built in **Cisco Pack
 
 ## Technologies Used
 - VLAN configuration & trunking  
-- Inter-VLAN routing (**Router-on-a-Stick**)  
-- Static routing  
-- NAT (Internet access simulation)  
+- Inter-VLAN routing using Layer 3 switches  
+- Static routing between switches and routers  
+- NAT for internet access simulation  
 - DNS and Web (HTTP) servers  
 - Manual IP configuration on clients  
 
