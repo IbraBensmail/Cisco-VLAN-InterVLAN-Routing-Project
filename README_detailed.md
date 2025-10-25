@@ -1,6 +1,6 @@
 # Cisco VLAN & Inter-VLAN Routing Project
 
-**Built from scratch using Cisco Packet Tracer — implementing VLANs, Inter-VLAN routing, DNS, and Web Server (HTTP) functionality.**
+**Built from scratch using Cisco Packet Tracer | implementing VLANs, Inter-VLAN routing, DNS, and Web Server (HTTP) functionality.**
 
 ---
 
