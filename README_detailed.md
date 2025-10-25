@@ -123,11 +123,8 @@ C:\> start www
 ---
 
 ## Project Diagram
-
-*(Insert your topology screenshot here)*  
-Example:
 ```markdown
-![Network Topology](screenshots/topology.png)
+![Network Topology](./screenshots/topology_overview.png)
 ```
 
 ---
