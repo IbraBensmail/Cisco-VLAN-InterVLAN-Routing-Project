@@ -99,8 +99,8 @@ Address: 192.168.10.60
 | IP Address | 192.168.10.60 |
 | Default Gateway | 192.168.10.1 |
 | Web Service | Enabled (HTTP) |
-| Test Page | "Welcome to My VLAN Project Web Server
-Everything is working perfectly!" |
+| Test Page | "Welcome to My VLAN Project Web Server 
+            |Everything is working perfectly!" |
 
 Verification:
 ```bash
