@@ -17,7 +17,7 @@ This project simulates a **multi-VLAN enterprise network** built in **Cisco Pack
 ## Files
 - [`Cisco-VLAN-InterVLAN-Routing-Project.pkt`](VLAN_internet.pkt) — Cisco Packet Tracer topology  
 - [`README_detailed.md`](README_detailed.md) — Full technical documentation  
-- (./screenshots)[View project screenshots]  
+- [View project screenshots](./screenshots) 
 
 ## Highlights
 - Multiple VLANs with isolated traffic for better network segmentation.  
