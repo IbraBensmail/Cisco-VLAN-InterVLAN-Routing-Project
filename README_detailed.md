@@ -73,7 +73,7 @@ Router1(config)# interface fa0/1
 Router1(config-if)# ip address 203.0.113.2 255.255.255.0
 Router1(config-if)# no shutdown
 
-# NAT (example)
+# NAT 
 Router1(config)# access-list 1 permit 192.168.10.0 0.0.0.255
 Router1(config)# access-list 1 permit 192.168.20.0 0.0.0.255
 Router1(config)# ip nat inside source list 1 interface FastEthernet0/1 overload
