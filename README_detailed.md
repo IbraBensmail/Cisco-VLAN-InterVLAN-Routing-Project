@@ -160,5 +160,5 @@ C:\> start www
 
 ## Summary
 
-A complete multi-VLAN network with static addressing, DNS and HTTP integration, and full inter-VLAN communication — built entirely from scratch in **Cisco Packet Tracer**.  
+A complete multi-VLAN network with static addressing, DNS and HTTP integration, and full inter-VLAN communication. Built entirely from scratch in **Cisco Packet Tracer**.  
 The setup demonstrates VLAN segmentation, inter-VLAN routing, DNS-based hostname resolution, NAT, and verified end-to-end connectivity.
