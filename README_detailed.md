@@ -140,7 +140,7 @@ C:\> start www
 | Web access (`start www`) | ✅ Opens webpage |
 | Trunk link (Switch0 ↔ Switch1) | ✅ Active |
 | Router interfaces | ✅ Up and operational |
-| Connectivity to Internet Router | ✅ Router1 can ping 203.0.113.1 |
+| Connectivity to Internet Router | ✅ All the PCs can ping 203.0.113.1 |
 
 ---
 
