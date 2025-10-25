@@ -123,7 +123,6 @@ C:\> start www
 ---
 
 ## Project Diagram
-```markdown
 ![Network Topology](./topology_overview.png)
 ```
 
