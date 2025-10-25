@@ -13,7 +13,7 @@ This project demonstrates the configuration of multiple VLANs, inter-VLAN routin
 ## Objectives
 
 - Configure VLANs and assign devices to each VLAN.  
-- Enable inter-VLAN routing using two router interfaces (no subinterfaces).  
+- Enable inter-VLAN routing using two router interfaces.  
 - Set up a **DNS Server** for hostname resolution.  
 - Add a **Web Server (HTTP)** to serve web content accessible via DNS name.  
 - Verify full end-to-end connectivity across VLANs and services.
