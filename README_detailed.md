@@ -124,8 +124,6 @@ C:\> start www
 
 ## Project Diagram
 ![Network Topology](./topology_overview.png)
-```
-
 ---
 
 ## Files Included
